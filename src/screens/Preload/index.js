@@ -16,7 +16,7 @@ export default () => {
             if(token){
 
             }else{
-                navigation.navigate('PasswordRecovery');
+                navigation.navigate('CreateHabit');
             }
         }
         checkToken();

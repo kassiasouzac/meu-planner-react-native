@@ -14,8 +14,14 @@ const CustomButtonText = styled.Text`
     font-family: Roboto-Black;
 `;
 
+const ButtonArea = styled.View`
+    width: 55%;
+    justify-content: center;
+`;
+
 export default ({buttonName}) => {
     return (
+        <ButtonArea>
         <LinearGradient
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
@@ -26,6 +32,7 @@ export default ({buttonName}) => {
         <CustomButtonText>{buttonName}</CustomButtonText>
     </CustomButton>
     </LinearGradient>
-    );
+    </ButtonArea>
+    )
 }
 
