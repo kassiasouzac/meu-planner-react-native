@@ -1,45 +1,42 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { TextInput } from "react-native";
+
 
 const InputArea = styled.View`
     width: 100%
     height: 60px;
     flex-direction: row;
-    padding-left: 10px;
+    padding-left: 15px;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 15px;
 `;
 
-const Input = styled(TextInput)`
+const Input = styled.Text`
     flex: 1;
     font-size: 18px;
-    color: #817373;
+    color: #A69C9C;
     
 `;
 
 const InputBorder = styled.View`
 width: 90%;
+flex-direction:row;
+justify-content: center;
 borderBottomWidth: 2px;
 border-color: 'rgba(255, 152, 95, 0.35)';
-padding: 0px;
+padding-bottom: 10px;
 margin: 0px;
 `;
 
-export default ({IconSvg, placeholder, value, onChangeText, multipleLine}) => {
+export default ({IconSvg, value}) => {
     return (
         <InputArea>
             <IconSvg width="24" height="24" fill="#FF985F" />
             <InputBorder>
-            <Input
-                placeholder={placeholder}
-                placeholderTextColor="#A69C9C"
-                value={value}
-                onChangeText={onChangeText}
-                multiline={multipleLine}
-                
-            />
+            <Input>
+            {value}
+            </Input>
             </InputBorder>
         </InputArea>
     );

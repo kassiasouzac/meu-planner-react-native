@@ -29,13 +29,13 @@ export default () => {
                 <SignInput
                     placeholder="Digite seu e-mail"
                     value={emailField}
-                    onChangetext={text=>setEmailField(text)}
+                    onChangeText={setEmailField}
                 />
 
                 <SignInput
                     placeholder="Digite sua senha"
                     value={passwordField}
-                    onChangetext={t=>setPasswordField(t)}
+                    onChangeText={setPasswordField}
                     password={true}
                 />
 

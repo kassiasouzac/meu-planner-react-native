@@ -21,6 +21,8 @@ target 'MeuPlanner' do
 
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
+  pod 'RNCCheckbox', :path => '../node_modules/@react-native-community/checkbox'
+
   target 'MeuPlannerTests' do
     inherit! :complete
     # Pods for testing

@@ -9,33 +9,10 @@ export const Container = styled.SafeAreaView`
     align-items: center;
 `;
 
-export const InputArea = styled.View`
-    padding: 35px;
-    padding-top: 10px;
+export const ListArea = styled.View`
+    padding-top: 20px;
+    margin-top: 60px;
     width: 100%;
-`;
-
-export const CustomButton = styled.TouchableOpacity`
-    height: 50px;
-    justify-content: center;
     align-items: center;
-`;
-
-export const CustomButtonText = styled.Text`
-    font-size: 18px;
-    color: #FFF;
-    font-family: Roboto-Black;
-`;
-
-export const SignMessageButton = styled.TouchableOpacity`
-    flex-direction: row;
-    justify-content: center;
-    margin-top: 50px;
-    margin-bottom: 60px
-`;
-    
-export const SignMessageButtonTextBold = styled.Text`
-    font-size: 16px;
-    color: #E49359;
-    font-weight: bold;
+    justify-content: center
 `;

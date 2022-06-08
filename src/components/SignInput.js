@@ -4,7 +4,7 @@ import { TextInput } from "react-native";
 
 const InputArea = styled.View`
     width: 100%
-    height: 60px;
+    height: 52px;
     background-color: #FFFFFF;
     flex-direction: row;
     border-radius: 20px;
@@ -12,7 +12,7 @@ const InputArea = styled.View`
     border-color: #FF985F;
     padding-left: 15px;
     align-items: center;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
 `;
 
 const Input = styled(TextInput)`

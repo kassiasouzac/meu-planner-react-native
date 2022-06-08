@@ -5,11 +5,16 @@ import SmallCustomButton from "../../../components/SmallCustomButton";
 
 import Habit from '../../../assets/habits.svg';
 
-import { Container, InputArea} from './styles'; 
+import { Container, InputArea, ListArea} from './styles'; 
+
+import { habits } from '../../../files/habitsList';
+
+import SelectMultiple from "../../../components/SelectMultiple";
+
 
 
 export default () => {
-  
+    
     return (
         <Container>
 
@@ -18,8 +23,10 @@ export default () => {
             EventSvg={Habit}/>
             
             <InputArea>
-            
-               
+            <ListArea>
+            <SelectMultiple options={habits}/>
+            </ListArea>
+           
                 <SmallCustomButton
                     buttonName="SALVAR"
                 ></SmallCustomButton>

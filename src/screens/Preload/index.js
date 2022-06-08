@@ -16,7 +16,7 @@ export default () => {
             if(token){
 
             }else{
-                navigation.navigate('CreateHabit');
+                navigation.navigate('CreateEvent');
             }
         }
         checkToken();

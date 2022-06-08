@@ -1,5 +1,12 @@
 {
     "name": "MeuPlanner",
     "displayName": "MeuPlanner",
-    "splash": "Preload"
+    "splash": "Preload",
+    "android":{
+        "config":{
+            "googleMaps":{
+                "apiKey": "AIzaSyCl9_keA7KplwQjLyp7JrACnXARRNlpy1A"
+            }
+        }
+    }
 }

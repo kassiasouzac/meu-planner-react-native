@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import { TextInput } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -20,6 +19,7 @@ export default () => {
     const [passwordField, setPasswordField] = useState('');
     const [nameField, setNameField] = useState('');
     const [confirmPasswordField, setConfirmPasswordField] = useState('');
+    const [LastnameField, setLastNameField] = useState('');
 
     return (
         <Container>
@@ -31,24 +31,30 @@ export default () => {
                 <SignInput
                     placeholder="Nome"
                     value={nameField}
-                    onChangetext={text=>setNameField(text)}
+                    onChangeText={setNameField}
+                />
+
+<               SignInput
+                    placeholder="Sobrenome"
+                    value={LastnameField}
+                    onChangeText={setLastNameField}
                 />
 
                 <SignInput
                     placeholder="Email"
                     value={emailField}
-                    onChangetext={t=>setEmailField(t)}
+                    onChangeText={setEmailField}
                 />
                  <SignInput
                     placeholder="Senha"
                     value={passwordField}
-                    onChangetext={t=>setPasswordField(t)}
+                    onChangeText={setPasswordField}
                     password={true}
                 />
                  <SignInput
                     placeholder="Confirme sua senha"
                     value={confirmPasswordField}
-                    onChangetext={t=>setConfirmPasswordField(t)}
+                    onChangeText={setConfirmPasswordField}
                     password={true}
                 />
 

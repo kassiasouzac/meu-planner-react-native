@@ -13,17 +13,17 @@ const TitleArea = styled.View`
 `;
 
 const TextTitle = styled.Text`
-    font-size: 40px;
+    font-size: 30px;
     color:#FF985F;
     font-family: Pacifico-Regular;
-    padding-right: 10px
+    padding-right: 15px
 `;
 
 
 export default ({Title, EventSvg}) => {
     return(
        <TitleArea>
-         <EventSvg  width="180" height="140"/>  
+         <EventSvg  width="170" height="130"/>  
            <TextTitle>
             {Title}
            </TextTitle>
