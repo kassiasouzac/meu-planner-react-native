@@ -3,7 +3,7 @@ import styled from "styled-components/native";
 
 
 export const Container = styled.SafeAreaView`
-    background-color: 'rgba(240, 234, 217, 0.74)';
+background-color: 'rgba(250, 248, 243, 0.57)';
     flex: 1;
     justify-content:  flex-start;
     align-items: center;
@@ -55,6 +55,10 @@ export const MapArea = styled.View`
 `;
 export const ModalCategory = styled.Modal``;
 
+export const ModalRepeat = styled.Modal``;
+
+export const ViewRepeat = styled.View``;
+
 export const List = styled.FlatList``;
 
 export const ModalView = styled.View`
@@ -96,20 +100,29 @@ export const ItemArea = styled.TouchableOpacity`
     align-items: center;
     justify-content: space-between;
     margin-bottom: 20px;
+    
 `;
 
 export const Item = styled.Text`
     font-size: 24px;
     color: 'rgba(166,156,156,0.9)';
     font-family: Roboto-Regular;
+    width:100%;
+`;
+
+export const RepeatText = styled.Text`
+flex: 1;
+font-size: 18px;
+color: #A69C9C;
+padding-left:10px;
 `;
 
 export const ItemBorder = styled.View`
-    width: 80%;
+    width: 90%;
     borderBottomWidth: 2px;
     border-color: 'rgba(255, 152, 95, 0.8)';
-    padding: 0px;
     margin: 0px;
+
 `;
 
 

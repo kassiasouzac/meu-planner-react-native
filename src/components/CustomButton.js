@@ -14,7 +14,7 @@ const CustomButtonText = styled.Text`
     font-family: Roboto-Black;
 `;
 
-export default ({buttonName}) => {
+export default ({buttonName, onPress}) => {
     return (
         <LinearGradient
         start={{x: 0, y: 0}}
@@ -22,7 +22,7 @@ export default ({buttonName}) => {
         colors={['#ff985f', 'rgba(255, 152, 95, 0.81)']}
         style={{borderRadius: 30, marginTop:70}}
     >
-    <CustomButton>
+    <CustomButton onPress={onPress}>
         <CustomButtonText>{buttonName}</CustomButtonText>
     </CustomButton>
     </LinearGradient>

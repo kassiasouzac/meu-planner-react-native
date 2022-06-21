@@ -4,19 +4,20 @@ import { TextInput } from "react-native";
 
 const InputArea = styled.View`
     width: 100%
-    height: 60px;
+    height: 50px;
     flex-direction: row;
     padding-left: 10px;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 15px;
+    margin-bottom: 2px;
 `;
 
 const Input = styled(TextInput)`
     flex: 1;
     font-size: 18px;
     color: #817373;
-    
+    padding: 0px;
+    margin-bottom:-10px;
 `;
 
 const InputBorder = styled.View`
@@ -24,7 +25,8 @@ width: 90%;
 borderBottomWidth: 2px;
 border-color: 'rgba(255, 152, 95, 0.35)';
 padding: 0px;
-margin: 0px;
+margin-bottom: 10px;
+
 `;
 
 export default ({IconSvg, placeholder, value, onChangeText, multipleLine}) => {

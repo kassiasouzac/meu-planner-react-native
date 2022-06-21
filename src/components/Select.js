@@ -5,12 +5,12 @@ import { AntDesign } from '@expo/vector-icons';
 
 const InputArea = styled.View`
     width: 100%
-    height: 60px;
+    height: 50px;
     flex-direction: row;
     padding-left: 15px;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 15px;
+    margin-bottom: 2px;
 `;
 
 const Input = styled.Text`
@@ -25,8 +25,7 @@ flex-direction:row;
 justify-content: center;
 borderBottomWidth: 2px;
 border-color: 'rgba(255, 152, 95, 0.35)';
-padding-bottom: 10px;
-margin: 0px;
+
 `;
 
 export default ({IconSvg, value}) => {
@@ -37,7 +36,7 @@ export default ({IconSvg, value}) => {
             <Input>
             {value}
             </Input>
-            <AntDesign name="down" size={20} color="#FF985F" style={{marginRight:20, marginTop:6}} />
+            <AntDesign name="down" size={20} color="#FF985F" style={{marginRight:20, marginTop:0}} />
             </InputBorder>
         </InputArea>
     );

@@ -33,3 +33,10 @@ export const InfoText = styled.Text`
     font-family: Outfit-Regular;
     margin-bottom: 30px;
 `;
+export const Back = styled.TouchableOpacity`
+    align-items:center;
+    flex-direction:row;
+    justify-content:flex-start;
+    padding:15px;
+    width:100%;
+`;

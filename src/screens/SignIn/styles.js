@@ -15,13 +15,13 @@ export const InputArea = styled.View`
     width: 100%;
 `;
 
-export const CustomButton = styled.TouchableOpacity`
+export const CustomButtonTest = styled.TouchableOpacity`
     height: 50px;
     justify-content: center;
     align-items: center;
 `;
 
-export const CustomButtonText = styled.Text`
+export const CustomButtonTextTest = styled.Text`
     font-size: 18px;
     color: #FFF;
     font-family: Roboto-Black;
@@ -38,4 +38,12 @@ export const SignMessageButtonTextBold = styled.Text`
     font-size: 16px;
     color: #E49359;
     font-weight: bold;
+`;
+
+export const Back = styled.TouchableOpacity`
+    align-items:center;
+    flex-direction:row;
+    justify-content:flex-start;
+    padding:15px;
+    width:100%;
 `;

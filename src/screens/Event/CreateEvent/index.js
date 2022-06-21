@@ -1,21 +1,16 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import MapView, { Marker } from "react-native-maps";
-import CheckBox from "@react-native-community/checkbox";
 import Geolocation from 'react-native-geolocation-service';
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import DatePicker from 'react-native-date-picker';
 import { format } from 'date-fns';
-
+import  CheckBox  from "@react-native-community/checkbox";
 import Config from '../../../../app.json';
-import { eventsCategory } from '../../../files/eventsCategory';
-
 import TitleImage from '../../../components/TitleImage';
 import LineInput from "../../../components/LineInput";
 import SmallCustomButton from "../../../components/SmallCustomButton";
 import InputDate from "../../../components/InputDate";
 import Select from "../../../components/Select";
-
-
 import Event from '../../../assets/event.svg';
 import IconTitle from '../../../assets/icons/file-lines-solid.svg';
 import IconDescription from '../../../assets/icons/text.svg';
@@ -24,20 +19,17 @@ import IconCategory from '../../../assets/icons/category.svg';
 import IconClock from '../../../assets/icons/clock.svg';
 import IconMap from '../../../assets/icons/map.svg';
 import { AntDesign, Feather} from '@expo/vector-icons';
-
-
 import { Container, InputArea, ModalMap, 
-    ModalView,LocalButton, LocalButtonText, 
-    ButtonArea, Modalheader, MapArea, List, 
+    ModalView,RepeatText, Modalheader, MapArea, List, 
     LocationView, LocationBorder, ListLocation, 
-    ModalCategory, Item, ItemArea, ItemBorder } from './styles'; 
-import { LinearGradient } from "expo-linear-gradient";
-import { FlatList, PermissionsAndroid } from "react-native";
+    ModalCategory, Item, ItemArea, ItemBorder, ModalRepeat, ViewRepeat } from './styles'; 
+import {  PermissionsAndroid } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { api } from "../../../services/api"
 
 export default () => {
-    const [titleField, setTitleField] = useState('');
-    const [descriptionField, setDescriptionField] = useState('');
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
     const [categoryField, setCategoryField] = useState('Categoria');
     const [dateField, setDateField] = useState(new Date());
     const [open, setOpen] = useState(false);
@@ -45,7 +37,6 @@ export default () => {
     const [openTime, setOpenTime] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalCategoryVisible, setModalCategoryVisible] = useState(false);
-    const [toggleCheckbox, setToggleCheckbox] = useState(false);
     const [selected, setSelected] = useState('');
     const [position, setPosition] = useState({ 
         latitude: -15.81913248419912, 
@@ -57,10 +48,27 @@ export default () => {
         longitude: 0,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
-        address: ''
+        address: 'Localização'
     })
     const [dateString, setDateString] = useState(format(dateField,"dd/MM/yyyy"));
     const [timeString, setTimeString] = useState(format(dateField,"HH:mm"));
+    const [repeat, setRepeat] = useState(false);
+    const [openRepeat, setOpenRepeat] = useState(false);
+    const [category, setCategory] = useState();
+
+    useEffect(()=> {
+        async function loadInfo(){
+            const response = await api.get('/categorys');
+            setCategory(response.data.category) 
+            }
+    loadInfo();
+    }, [])
+
+    async function handleCreateEvent(){
+        if(title === '' || description === ''|| selected === '' || dateField === '' || timeField === ''){
+            alert('Preencha os campos!')
+        }
+    }
 
     const request_location_runtime_permission = async () => {
         try{
@@ -113,7 +121,6 @@ export default () => {
             </ItemArea> 
         )
     }
-   
   
     return (
         <Container>
@@ -126,15 +133,15 @@ export default () => {
             <LineInput
                     IconSvg={IconTitle}
                     placeholder="Título"
-                    value={titleField}
-                    onChangeText={setTitleField}
+                    value={title}
+                    onChangeText={setTitle}
                     multipleLine={false}
                 />
                 <LineInput
                     IconSvg={IconDescription}
                     placeholder="Descrição"
-                    value={descriptionField}
-                    onChangeText={setDescriptionField}
+                    value={description}
+                    onChangeText={setDescription}
                     multipleLine={true}
                 />
                  <TouchableOpacity onPress={() => setModalCategoryVisible(true)}>
@@ -156,14 +163,14 @@ export default () => {
              </Modalheader>
                 <ModalView>
                     <List
-                    data={eventsCategory}
+                    data={category}
                     keyExtractor={(item) => (item.id)}
                     renderItem={({item}) => renderOption(item)}
                     />
                 </ModalView>
         </ModalCategory>
                
-                 <TouchableOpacity onPress={() => setOpen(true)}>
+        <TouchableOpacity onPress={() => setOpen(true)}>
                  <InputDate
                     IconSvg={IconCalendar}
                     value={dateString}
@@ -204,25 +211,15 @@ export default () => {
                         setTimeString(format(timeField,"HH:mm"))
                     }}
                     onCancel={()=>{
-                        setOpen(false)
+                        setOpenTime(false)
                     }}
                 />
-
-                    <ButtonArea>
-                        <LinearGradient
-                        start={{x: 0, y: 0}}
-                        end={{x: 1, y: 1}}
-                        colors={['#ff985f', 'rgba(255, 152, 95, 0.62)']}
-                        style={{borderRadius: 30, marginTop:15}}
-                    >
-                    <LocalButton onPress={()=> setModalVisible(true)}>
-                    <IconMap width="24" height="24" fill="#FFFFFF"/>
-                    <LocalButtonText>
-                        BUSCAR LOCALIZAÇÃO DO EVENTO
-                        </LocalButtonText>
-                    </LocalButton>
-                    </LinearGradient>
-                    </ButtonArea>
+                <TouchableOpacity onPress={()=> setModalVisible(true)}>
+                    <InputDate
+                        IconSvg={IconMap}
+                        value={location.address}
+                    />
+                 </TouchableOpacity>
                
                    <ModalMap
                     animationType="slide"
@@ -295,8 +292,17 @@ export default () => {
                             </MapArea>
                        </ModalView>
                     </ModalMap>
-                
-  
+                    <ItemArea>
+                    <CheckBox
+                    disabled={false}
+                    value={repeat}
+                    onValueChange={setRepeat}
+                    tintColors={{true:'#FF985F', false:'#FF985F'}}  
+                />
+                        <RepeatText>Repetir evento?</RepeatText>
+                    </ItemArea>
+                    
+
                 <SmallCustomButton
                     buttonName="SALVAR"
                 ></SmallCustomButton>

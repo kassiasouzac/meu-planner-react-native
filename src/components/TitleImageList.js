@@ -8,7 +8,7 @@ const TitleArea = styled.View`
     align-items: center;
     justify-content: space-between;
     padding-left: 5px;
-    margin-top: 35px;
+    margin-top: 10px;
     
 `;
 

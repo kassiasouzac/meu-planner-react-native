@@ -1,24 +1,29 @@
 import React, { useState, useContext } from "react";
-import { TextInput } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import { UserContext } from '../../contexts/UserContext';
+
 import SignInput from '../../components/SignInput';
 import Title from '../../components/Title';
 
 import { LinearGradient } from 'expo-linear-gradient';
+import {AntDesign} from '@expo/vector-icons';
 
 import { Container, InputArea, 
-        CustomButton, CustomButtonText, InfoText} from './styles'; 
+        CustomButton, CustomButtonText, InfoText, Back} from './styles'; 
 
 
 export default () => {
     const [emailField, setEmailField] = useState('');
-    const Size = 35;
+    const navigation = useNavigation();
 
     return (
         <Container>
+            <Back
+            onPress={()=> navigation.goBack() }
+            >
+            <AntDesign name="back" size={24} color="#FF985F" />
+            </Back>
 
             <Title Title="Recuperação de senha"></Title>
 

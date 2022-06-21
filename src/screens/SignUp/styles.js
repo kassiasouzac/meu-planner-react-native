@@ -12,6 +12,7 @@ export const Container = styled.SafeAreaView`
 export const InputArea = styled.View`
     padding: 35px;
     padding-top: 10px;
+    padding-bottom:0px;
     width: 100%;
 `;
 
@@ -38,4 +39,11 @@ export const SignMessageButtonTextBold = styled.Text`
     font-size: 16px;
     color: #E49359;
     font-weight: bold;
+`;
+export const Back = styled.TouchableOpacity`
+    align-items:center;
+    flex-direction:row;
+    justify-content:flex-start;
+    padding:15px;
+    width:100%;
 `;

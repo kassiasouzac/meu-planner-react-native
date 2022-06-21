@@ -4,19 +4,18 @@ import styled from 'styled-components/native';
 
 const InputArea = styled.View`
     width: 100%
-    height: 60px;
+    height: 50px;
     flex-direction: row;
     padding-left: 15px;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 15px;
+    margin-bottom: 2px;
 `;
 
 const Input = styled.Text`
     flex: 1;
     font-size: 18px;
     color: #A69C9C;
-    
 `;
 
 const InputBorder = styled.View`
@@ -25,7 +24,7 @@ flex-direction:row;
 justify-content: center;
 borderBottomWidth: 2px;
 border-color: 'rgba(255, 152, 95, 0.35)';
-padding-bottom: 10px;
+padding-bottom: 0px;
 margin: 0px;
 `;
 

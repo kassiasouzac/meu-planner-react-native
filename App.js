@@ -10,15 +10,23 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
 import UserContextProvider from './src/contexts/UserContext';
-import MainStack from './src/stacks/MainStack';
+//import MainStack from './src/stacks/MainStack';
+import Routes from './src/routes';
+import { AuthProvider } from './src/contexts/AuthContext';
+
+import { StatusBar } from 'react-native';
 
 
 export default () => {
     return ( 
-      <UserContextProvider>
+      
+      
         <NavigationContainer >
-          <MainStack/>
+          <AuthProvider>
+          <StatusBar backgroundColor="#6294B2" barStyle="dark-content" translucent={false}/>
+          <Routes/>
+          </AuthProvider>
         </NavigationContainer>
-      </UserContextProvider>
+      
     )
 }
