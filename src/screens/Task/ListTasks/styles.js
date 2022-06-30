@@ -11,7 +11,7 @@ export const Container = styled.SafeAreaView`
 
 export const ListArea = styled.View`
     padding-top: 5px;
-    margin-top: 30px;
+    margin-top: 5px;
     width: 100%;
     align-items: center;
     justify-content: center

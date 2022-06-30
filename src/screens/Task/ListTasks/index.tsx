@@ -4,7 +4,7 @@ import { Container, ListArea } from "./styles";
 import { api } from "../../../services/api";
 
 import TitleImageList from "../../../components/TitleImageList";
-import ListTask from "../../../components/ListTask"
+import ListTasks from "../../../components/ListTasks"
 import Task from "../../../assets/task.svg";
 
 type TaskProps = {
@@ -22,8 +22,6 @@ export default () => {
        async function loadInfo(){
             const response = await api.get('/tasks')
             setTasks(response.data.task);
-            console.log(response.data.task);
-            console.log(tasks);
         }
         loadInfo();
     }, [])
@@ -35,7 +33,7 @@ export default () => {
                 EventSvg={Task}
             />
             <ListArea>
-           <ListTask
+           <ListTasks
            options={tasks}
            />
             </ListArea>

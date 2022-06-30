@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import { Text } from "react-native";
+import React, { useState, useEffect } from "react";
+import { api } from "../services/api"
+import { format, parseISO } from "date-fns";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { FontAwesome5, MaterialCommunityIcons, Ionicons, MaterialIcons, AntDesign } from '@expo/vector-icons';
 
 import styled from "styled-components/native";
@@ -8,9 +10,10 @@ import IconText from "../assets/icons/text.svg"
 import IconCalendar from "../assets/icons/calendar.svg"
 import IconClock from "../assets/icons/clock.svg"
 import IconMap from "../assets/icons/map.svg"
+import { useNavigation } from "@react-navigation/native";
 
 const List = styled.FlatList`
-    width: 95%;
+    width: 100%;
 `;
 
 const ItemArea = styled.TouchableOpacity`
@@ -19,9 +22,9 @@ const ItemArea = styled.TouchableOpacity`
     padding-left: 2px;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 5px;
+    margin-bottom: 0px;
     padding-bottom: 0px;
-    padding-top: 30px;
+    padding-top: 40px;
 `;
 
 const ItemTitle = styled.Text`
@@ -34,7 +37,7 @@ const ItemTitle = styled.Text`
 const ItemLineArea = styled.View`
     width: 100%
     flex-direction: row;
-    padding: 0px;
+    padding-left: 10px;
     align-items: center;
     margin-top:10px;
 `;
@@ -45,7 +48,7 @@ const LineArea = styled.View`
     flex-direction: row;
     justify-content: space-between;
     margin-top:10px;
-    padding-left: 0px;
+    padding-left: 10px;
     
 `;
 
@@ -65,7 +68,7 @@ align-items: center;
 `;
 
 const ItemDescription = styled.Text`
-font-size: 14px;
+font-size: 18px;
 color: 'rgba(166,156,156,0.9)';
 font-family: Roboto-Regular;
 margin-left: 10px;
@@ -80,18 +83,17 @@ const ItemBorder = styled.View`
 `;
 
 const CategoryTag = styled.View`
-    align-self: center;
-    padding-left: 10px;
-    padding-right: 10px;
-    position: absolute;
-    align-items: center;
-    flex-direction: row;
-    justify-content: space-around;
-    border-radius: 40px;
-    background-color: 'rgba(204,213,214,1)';
-    top: 15px;
-    right: 20px;
-    zIndex: 5;
+align-self: center;
+padding-left: 10px;
+padding-right: 10px;
+position: absolute;
+align-items: center;
+flex-direction: row;
+justify-content: space-around;
+background-color: 'rgba(229, 231, 233, 1)';
+top: 20px;
+right: 20px;
+zIndex: 5;
 `;
 
 const RepeatTag = styled.View`
@@ -101,10 +103,9 @@ const RepeatTag = styled.View`
     position: absolute;
     align-items: center;
     flex-direction: row;
-    border-radius: 40px;
     justify-content: space-around;
-    background-color: #FF985F;
-    top: 15px;
+    background-color: 'rgba(255, 152, 95, 0.77)';
+    top: 20px;
     left: 15px;
     zIndex: 5;
 `;
@@ -124,95 +125,169 @@ const LabelText = styled.Text`
     margin-left:10px;
 `;
 
-export default ({options}) => {
 
-    function renderLabel(boolean, frequency){
-        if(boolean === 'true'){
-            return(
-                <RepeatTag>
-                    <FontAwesome5 name="calendar-alt" size={14} color="#ffffff"/>
-                    <LabelTextTag>{frequency}</LabelTextTag>
-                </RepeatTag>
-            )
+export default ({options}) => {
+    const [category, setCategory] = useState();
+    const navigation = useNavigation();
+
+    useEffect(()=> {
+        async function loadInfo(){
+            const response = await api.get('/categorys');
+            setCategory(response.data)     
+            }
+    loadInfo();
+    }, [])
+
+    function renderIcon(categoryId){
+        const car = category?.category[0].id;
+        const culture = category?.category[1].id;
+
+        switch(categoryId){
+            case car :
+                return(<FontAwesome5 name="car" size={14} color="rgba(0, 0, 0, 0.5)" />);
+                break;
+            case culture :
+                return(<Ionicons name="earth-sharp" size={16} color="rgba(0, 0, 0, 0.5)" />);
+                break;
+            case category?.category[2].id:
+                return(<FontAwesome5 name="book-reader" size={14} color="rgba(0, 0, 0, 0.5)" />);
+                break;
+            case category?.category[3].id:
+                return(<MaterialCommunityIcons name="gamepad-square" size={16} color="rgba(0, 0, 0, 0.5)" />);
+                break;
+            case category?.category[4].id:
+                return(<MaterialIcons name="sports-soccer" size={16} color="rgba(0, 0, 0, 0.5)" />);
+                break;
+            case category?.category[5].id:
+                return(<MaterialIcons name="family-restroom" size={14} color="rgba(0, 0, 0, 0.5)" />);
+                break;
+            case category?.category[6].id:
+                return(<FontAwesome5 name="praying-hands" size={14} color="rgba(0, 0, 0, 0.5)" />);
+                break;
+            case category?.category[7].id:
+                return(<AntDesign name="like1" size={14} color="rgba(0, 0, 0, 0.5)" />);
+                break;
+            case category?.category[8].id:
+                return(<MaterialCommunityIcons name="airplane" size={18} color="rgba(0, 0, 0, 0.5)" />);
+                break;
+            case category?.category[9].id:
+                return(<AntDesign name="medicinebox" size={18} color="rgba(0, 0, 0, 0.5)" />);
+                break;
+            case category?.category[10].id:
+                return(<Ionicons name="md-file-tray-stacked-sharp" size={18} color="rgba(0, 0, 0, 0.5)" />);
+                break;
+            case category?.category[11].id:
+                return(<MaterialIcons name="business-center" size={16} color="rgba(0, 0, 0, 0.5)" />);
+                break;
         }
     }
-    
 
-    function renderIcon(category){
-
-        switch(category){
-            case'Carro':
-                return(<FontAwesome5 name="car" size={14} color="#FF985F" />);
+    function renderName(categoryId){
+        switch(categoryId){
+            case category?.category[0].id :
+                return("Automóvel");
                 break;
-            case'Cultura':
-                return(<Ionicons name="earth-sharp" size={16} color="#FF985F" />);
+            case category?.category[1].id :
+                return("Cultura");
                 break;
-            case'Educação':
-                return(<FontAwesome5 name="book-reader" size={14} color="#FF985F" />);
+            case category?.category[2].id:
+                return("Educação");
                 break;
-            case'Entretenimento':
-                return(<MaterialCommunityIcons name="gamepad-square" size={16} color="#FF985F" />);
+            case category?.category[3].id:
+                return("Entretenimento");
                 break;
-            case'Esporte':
-                return(<MaterialIcons name="sports-soccer" size={16} color="#FF985F" />);
+            case category?.category[4].id:
+                return("Esporte");
                 break;
-            case'Família':
-                return(<MaterialIcons name="family-restroom" size={14} color="#FF985F" />);
+            case category?.category[5].id:
+                return("Família");
                 break;
-            case'Profissional':
-                return(<MaterialIcons name="business-center" size={16} color="#FF985F" />);
+            case category?.category[6].id:
+                return("Religião");
                 break;
-            case'Religião':
-                return(<FontAwesome5 name="praying-hands" size={14} color="#FF985F" />);
+            case category?.category[7].id:
+                return("Social");
                 break;
-            case'Social':
-                return(<AntDesign name="like1" size={14} color="#FF985F" />);
+            case category?.category[8].id:
+                return("Viagem");
+            case category?.category[9].id:
+                return("Saúde");
                 break;
-            case'Viagem':
-                return(<MaterialCommunityIcons name="airplane" size={18} color="#FF985F" />);
+            case category?.category[10].id:
+                return("Organização");
+                break;
+            case category?.category[11].id:
+                return("Profissional");
                 break;
         }
+    }
+
+    function handleNavigation(item){
+        const title = item.title;
+        const description = item.description;
+        const date= item.date;
+        const time = item.time;
+        const id = item.id;
+        const categoryId = item.categoryId;
+        const localization = [item.extendedLocalization[0].address]; 
+        const extendedLocalization = item.extendedLocalization;
+        const repeat = item.repeat;
+   
+        navigation.navigate('ListEvent', {title, description, date, time, id, categoryId, localization,extendedLocalization, repeat})
     }
 
     function renderOption(item){
+        const date = (parseISO(item.date))
+        const dateString = format(date,"dd/MM/yyyy") ;
+        const time = (parseISO(item.time));
+        const timeString =(format(time, "HH:mm")) ;
         return(
             
-            <ItemArea >
-               {renderLabel(item.repeat.isOn, item.repeat.frequency)}
-                <CategoryTag>
-                    {renderIcon(item.category)}
-                    
-                    <LabelText>{item.category}</LabelText>
-                    </CategoryTag>
-                <ItemBorder>
-                    <ItemLineArea>
-                        <Icontitle width="14" height="14" fill="#FF985F"/>
-                        <ItemTitle>{item.title}</ItemTitle>
-                    </ItemLineArea>
+            <TouchableOpacity
+            onPress={() => handleNavigation(item) }
+            >
+                <ItemArea >
+            {item.repeat[0].isOn &&(
+            <RepeatTag>
+                 <FontAwesome5 name="calendar-alt" size={14} color="#ffffff"/>
+                 <LabelTextTag>{item.repeat[0].frequency}</LabelTextTag>   
+             </RepeatTag>)}
+            
+             <CategoryTag>
+                 {renderIcon(item.categoryId)}
+                 
+                 <LabelText>{renderName(item.categoryId)}</LabelText>
+                 </CategoryTag>
+             <ItemBorder>
+                 <ItemLineArea>
+                     <Icontitle width="18" height="18" fill="#FF985F"/>
+                     <ItemTitle>{item.title}</ItemTitle>
+                 </ItemLineArea>
 
-                    <ItemLineArea>
-                        <IconText width="14" height="14" fill="#FF985F"/>
-                    <ItemDescription>{item.description}</ItemDescription>
-                    </ItemLineArea>
+                 <ItemLineArea>
+                     <IconText width="18" height="18" fill="#FF985F"/>
+                 <ItemDescription>{item.description}</ItemDescription>
+                 </ItemLineArea>
 
-                    <LineArea>
-                   <Box>
-                   <InternBox><IconCalendar width="14" height="14" fill="#FF985F"/></InternBox>
-                    <ItemDescription>{item.date}</ItemDescription>
-                   </Box>
-                   <Box>
-                   <InternBox><IconClock width="14" height="14" fill="#FF985F"/></InternBox>
-                    <ItemDescription>{item.time}</ItemDescription>
-                   </Box>
-                       
-                    </LineArea>
-                    <ItemLineArea>
-                        <IconMap width="14" height="14" fill="#FF985F"/>
-                    <ItemDescription> {item.localization.address}</ItemDescription>
-                    </ItemLineArea>
-                    
-                </ItemBorder>
-            </ItemArea> 
+                 <LineArea>
+                <Box>
+                <InternBox><IconCalendar width="18" height="18" fill="#FF985F"/></InternBox>
+                 <ItemDescription>{dateString}</ItemDescription>
+                </Box>
+                <Box>
+                <InternBox><IconClock width="18" height="18" fill="#FF985F"/></InternBox>
+                 <ItemDescription>{timeString}</ItemDescription>
+                </Box> 
+                 </LineArea>
+                 <ItemLineArea>
+                     <IconMap width="18" height="18" fill="#FF985F"/>
+                 <ItemDescription>{item.extendedLocalization[0].address}</ItemDescription>
+                 </ItemLineArea>
+                 
+                 
+             </ItemBorder>
+         </ItemArea> 
+            </TouchableOpacity>
         )
     }
    
@@ -222,7 +297,6 @@ export default ({options}) => {
                 data={options}
                 keyExtractor={(item) => (item.id)}
                 renderItem={({item}) => renderOption(item)}
-                onEndReached={this.handleLoadMore}
             />
     );
 }

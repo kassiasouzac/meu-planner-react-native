@@ -28,3 +28,8 @@ export const ListArea = styled.View`
 width: 100%;
 padding: 0px;
 `;
+
+export const LoadingIcon = styled.ActivityIndicator`
+    margin-top: 50px;
+    
+`;

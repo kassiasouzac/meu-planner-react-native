@@ -10,7 +10,7 @@ export default () => {
     const navigation = useNavigation()
     return (
         <Container>
-            <SquareLogo width = "100%" height="250" />
+            <SquareLogo width = "100%" height="250" style={{marginTop:30}} />
 
             <InputArea>
 

@@ -8,7 +8,7 @@ const TitleArea = styled.View`
     align-items: center;
     justify-content: space-between;
     padding-left: 5px;
-    margin-top: 10px;
+    margin-top: 5px;
     
 `;
 
@@ -23,7 +23,7 @@ const TextTitle = styled.Text`
 export default ({Title, EventSvg}) => {
     return(
        <TitleArea>
-         <EventSvg  width="170" height="130"/>  
+         <EventSvg  width="140" height="100"/>  
            <TextTitle>
             {Title}
            </TextTitle>

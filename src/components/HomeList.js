@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
 import { api } from "../services/api";
 
 import styled from "styled-components/native";
-import { FontAwesome5, Fontisto, AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons'; 
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { FontAwesome5, Fontisto, AntDesign, Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 const TitleLine = styled.Text`
 font-size: 20px;
@@ -26,7 +28,7 @@ padding-top: 5px;
 
 const RowArea = styled.View`
     flex-direction: row;
-    margin-top: 10px;
+    margin-top: 5px;
     padding-left:20px;
     padding-right:20px;
     width: 100%;
@@ -41,9 +43,9 @@ const List = styled.FlatList`
 const Circle = styled.View`
     margin-right: 10px;
     margin-left: 10px;
-    width: 95px;
-    height: 95px;
-    border-radius: 47.5px; 
+    width: 80px;
+    height: 80px;
+    border-radius: 40px; 
     border-color: 'rgba(255, 152, 95, 0.55)';
     borderWidth: 1px;
     justify-content: center;
@@ -59,9 +61,9 @@ const CircleText = styled.Text`
 `;
 const Button = styled.TouchableOpacity``;
 
-export default ({titleLine, options, onPress}) =>{
+export default ({titleLine, options, screen}) =>{
     const [category, setCategory] = useState();
-    const [page, setPage] = useState(1);
+    const navigation = useNavigation();
 
     useEffect(()=> {
         async function loadInfo(){
@@ -71,10 +73,50 @@ export default ({titleLine, options, onPress}) =>{
     loadInfo();
     }, [])
 
+    function handleNavigation(item){
+ 
+        if(titleLine === 'Eventos'){
+
+            const title = item.title;
+            const description = item.description;
+            const date= item.date;
+            const time = item.time;
+            const id = item.id;
+            const categoryId = item.categoryId;
+            const localization = [item.extendedLocalization[0].address]; 
+            const extendedLocalization = item.extendedLocalization;
+            const repeat = item.repeat;
+
+            navigation.navigate('ListEvent', {title, description, date, time, id, categoryId, localization, extendedLocalization, repeat})
+        }else if(titleLine === 'Tarefas'){
+            navigation.navigate('ListTask')
+        }else if(titleLine === 'Metas'){
+
+            const title = item.title;
+            const description = item.description;
+            const startDate= item.startDate;
+            const endDate = item.endDate;
+            const id = item.id;
+            const categoryId = item.categoryId;
+            const steps = item.steps;
+
+            navigation.navigate('ListGoal',{title, description, startDate, endDate, id, categoryId, steps})
+        }else if(titleLine === 'Hábitos'){
+            const id = item.id; 
+        const categoryId = item.categoryId; 
+        const days = item.frequency[0].days
+   
+        navigation.navigate('ListHabit', {id, categoryId, days})
+        }
+        
+    }
+
     function renderItem(item){
 
             return(
-                <Button>
+                <Button
+                onPress={() => handleNavigation(item) }
+                >
                     <Circle>
                         {renderIcon(item.categoryId)}
                         <CircleText numberOfLines={5}>{item.title}</CircleText>
@@ -131,9 +173,13 @@ export default ({titleLine, options, onPress}) =>{
 
     return(
        <Area>
+        <TouchableOpacity
+        onPress={()=> navigation.navigate(screen)}
+        >
         <TitleLine>
            *  {titleLine}
         </TitleLine>
+        </TouchableOpacity>
         <Line>
         <RowArea>
            <List
@@ -143,7 +189,7 @@ export default ({titleLine, options, onPress}) =>{
             horizontal={true}
             initialNumToRender={3}
            />
-           <Button >
+           <Button onPress={()=> navigation.navigate(screen)} >
            <Fontisto style={{ padding:0, marginRight:-10}} name="angle-dobule-right" size={18} color="#FF985F" />
            </Button>
         </RowArea>

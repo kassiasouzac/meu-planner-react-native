@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesome5, MaterialCommunityIcons, Ionicons, MaterialIcons, AntDesign } from '@expo/vector-icons';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
+import { useNavigation } from "@react-navigation/native";
 
 import styled from "styled-components/native";
 import Icontitle from "../assets/icons/file-lines-solid.svg"
 import IconText from "../assets/icons/text.svg"
 import IconCalendar from "../assets/icons/calendar.svg"
 import { api } from "../services/api"
+import { View } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const List = styled.FlatList`
-    width: 95%;
+    width: 100%;
+    height:85%
 `;
 
 const ItemArea = styled.TouchableOpacity`
@@ -86,8 +90,7 @@ const CategoryTag = styled.View`
     align-items: center;
     flex-direction: row;
     justify-content: space-around;
-    border-radius: 40px;
-    background-color: 'rgba(204,213,214,1)';
+    background-color: 'rgba(229, 231, 233, 1)';
     top: 15px;
     right: 20px;
     zIndex: 5;
@@ -103,6 +106,7 @@ const LabelText = styled.Text`
 export default ({options}) => {
 
     const [category, setCategory] = useState();
+    const navigation = useNavigation();
 
     useEffect(()=> {
         async function loadInfo(){
@@ -197,11 +201,27 @@ export default ({options}) => {
         }
     }
 
+    function handleNavigation(item){
+        const title = item.title;
+        const description = item.description;
+        const date = (parseISO(item.date));
+        const dateString = format(date,"dd/MM/yyyy");
+        const id = item.id;
+        const categoryId = item.categoryId;
+   
+        navigation.navigate('ListTask', {title, description, dateString, id, categoryId})
+
+    }
+
     function renderItem(item){
-        const date = new Date();
-        console.log(date);
+        const date = (parseISO(item.date))
+        const dateString = format(date,"dd/MM/yyyy") ;
         return(
             
+           <View>
+            <TouchableOpacity
+                onPress={() => handleNavigation(item)}
+            >
             <ItemArea >
                <CategoryTag>
                     {renderIcon(item.categoryId)}
@@ -221,12 +241,14 @@ export default ({options}) => {
                     <LineArea>
                    <Box>
                    <InternBox><IconCalendar width="14" height="14" fill="#FF985F"/></InternBox>
-                    <ItemDescription>{item.date}</ItemDescription>
+                    <ItemDescription>{dateString}</ItemDescription>
                    </Box>
    
                     </LineArea>
                 </ItemBorder>
             </ItemArea> 
+            </TouchableOpacity>
+           </View>
         )
     }
    

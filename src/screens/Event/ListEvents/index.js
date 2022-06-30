@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Container, ListArea } from "./styles";
 import { api } from "../../../services/api";
@@ -13,7 +13,8 @@ export default () => {
     useEffect(()=>{
        async function loadInfo(){
             const response = await api.get('/events')
-            setEvents(response.data);
+            console.log(response.data.event);
+            setEvents(response.data.event);
         }
         loadInfo();
     }, [])

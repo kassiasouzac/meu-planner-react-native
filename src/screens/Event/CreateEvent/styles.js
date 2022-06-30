@@ -18,21 +18,21 @@ padding: 15px;
 
 export const LocationView = styled.View`
 width: 100%
-padding-left: 15px;
 padding-top: 10px;
 padding-bottom:15px;
 align-items: center;
+justify-content: center;
 margin-bottom: 15px;
-margin-top:28px
+margin-top:15px
 `;
 
 export const ListLocation = styled.View`
-width: 90%
+width: 100%
 padding-left: 3px;
 padding-right: 10px;
 position: absolute;
 z-index: 5;
-top: -15px
+top: 15px;
 `;
 
 export const LocationBorder = styled.Text`
@@ -57,7 +57,14 @@ export const ModalCategory = styled.Modal``;
 
 export const ModalRepeat = styled.Modal``;
 
-export const ViewRepeat = styled.View``;
+export const ViewRepeat = styled.View`
+    width:70%;
+    align-self: center;
+    top:220px;
+    background-color: #FFFFFF;
+    align-items: flex-start;
+    justify-content: flex-start;
+`;
 
 export const List = styled.FlatList``;
 
@@ -67,11 +74,35 @@ export const ModalView = styled.View`
     margin: 10px;
 `;
 
+export const CloseButton = styled.TouchableOpacity`
+    align-items: center;
+    justify-content: center;
+    width:22px;
+    height: 22px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    top: 10px;
+    padding: 0px;
+`;
+
 export const Modalheader = styled.View`
     flex-direction: row;
     align-items: space-between;
     width: 95%;
     height: 40px;
+`;
+
+export const Transparent = styled.View`
+    flex: 1;
+    background-color:'rgba(2, 2, 2, 0.54)'; 
+`;
+
+export const ModalHeaderRepeat = styled.View`
+    background-color: #6294B2;
+    align-items: flex-end;
+    width: 100%;
+    height: 40px;
+    margin-bottom:20px;
 `;
 
 export const LocalButton = styled.TouchableOpacity`
@@ -103,11 +134,33 @@ export const ItemArea = styled.TouchableOpacity`
     
 `;
 
+export const AreaListFrequency = styled.View`
+    width:45%;
+    justify-content:center;
+    align-items: center;
+    padding-left:20px;
+`;
+
+export const ItemAreaFrequency = styled.TouchableOpacity`
+    width: 100%
+    flex-direction: row;
+    padding-left: 2px;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+`;
+
 export const Item = styled.Text`
     font-size: 24px;
     color: 'rgba(166,156,156,0.9)';
     font-family: Roboto-Regular;
     width:100%;
+`;
+
+export const ItemFrequency = styled.Text`
+    font-size: 20px;
+    color: 'rgba(166,156,156,0.9)';
+    font-family: Roboto-Regular;
 `;
 
 export const RepeatText = styled.Text`

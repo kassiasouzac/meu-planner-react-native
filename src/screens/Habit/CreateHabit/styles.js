@@ -10,14 +10,15 @@ background-color: 'rgba(250, 248, 243, 0.57)';
 `;
 
 export const InputArea = styled.View`
-padding: 15px;
-    padding-top: 50px;
+padding: 0px;
+    padding-top: 30px;
     align-items: center;
     width: 100%;
 `;
 
 export const ListArea = styled.View`
     width: 100%;
+   margin-top:20px;
 `;
 
 

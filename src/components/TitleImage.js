@@ -8,23 +8,29 @@ const TitleArea = styled.View`
     align-items: center;
     justify-content: space-between;
     padding-left: 5px;
-    margin-top: 0px;
-   
-    
+    margin-top: 10px;
+
 `;
 
 const TextTitle = styled.Text`
     font-size: 40px;
     color:#FF985F;
     font-family: Pacifico-Regular;
-    padding-right: 10px
+    padding-right: 20px
+`;
+
+const ImageArea = styled.View`
+margin-left: 0px;
+padding-top:10px;
 `;
 
 
 export default ({Title, EventSvg}) => {
     return(
        <TitleArea>
-         <EventSvg  width="180" height="140"/>  
+        <ImageArea>
+        <EventSvg  width="180" height="140"/>    
+        </ImageArea>  
            <TextTitle>
             {Title}
            </TextTitle>
