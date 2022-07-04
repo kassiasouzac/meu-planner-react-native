@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { format, parseISO } from 'date-fns';
 import { api } from "../services/api";
 
 import styled from "styled-components/native";
@@ -88,8 +89,17 @@ export default ({titleLine, options, screen}) =>{
             const repeat = item.repeat;
 
             navigation.navigate('ListEvent', {title, description, date, time, id, categoryId, localization, extendedLocalization, repeat})
+        
         }else if(titleLine === 'Tarefas'){
-            navigation.navigate('ListTask')
+            const title = item.title;
+            const description = item.description;
+            const date = item.date;
+            const dateString = format(parseISO(date),"dd/MM/yyyy");
+            const id = item.id;
+            const categoryId = item.categoryId;
+
+            navigation.navigate('ListTask', {title, description, dateString, id, categoryId, date})
+       
         }else if(titleLine === 'Metas'){
 
             const title = item.title;
@@ -101,12 +111,15 @@ export default ({titleLine, options, screen}) =>{
             const steps = item.steps;
 
             navigation.navigate('ListGoal',{title, description, startDate, endDate, id, categoryId, steps})
+        
         }else if(titleLine === 'Hábitos'){
+            
             const id = item.id; 
-        const categoryId = item.categoryId; 
-        const days = item.frequency[0].days
-   
-        navigation.navigate('ListHabit', {id, categoryId, days})
+            const categoryId = item.categoryId; 
+            const days = item.frequency[0].days;
+            const startDate = item.created_at;
+    
+        navigation.navigate('ListHabit', {id, categoryId, days, startDate})
         }
         
     }

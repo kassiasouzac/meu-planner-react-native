@@ -67,18 +67,21 @@ export default () => {
                     placeholder="Nome"
                     value={name}
                     onChangeText={setNameField}
+                    password={false}
                 />
 
 <               SignInput
                     placeholder="Sobrenome"
                     value={lastname}
                     onChangeText={setLastNameField}
+                    password={false}
                 />
 
                 <SignInput
                     placeholder="Email"
                     value={email}
                     onChangeText={setEmailField}
+                    password={false}
                 />
                  <SignInput
                     placeholder="Senha"

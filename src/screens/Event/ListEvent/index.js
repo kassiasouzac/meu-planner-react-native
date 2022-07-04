@@ -44,13 +44,7 @@ export default ({navigation, route}) => {
   
     
     return(
-        <Container>
-           <CircleTwoButtons
-                buttonName1={'Adicionar Alarme'} 
-                buttonName2={'Ativar Notificações'}  
-                IconSvg1={IconClock} 
-                IconSvg2={IconEnvelop}
-            />   
+        <Container> 
            <AreaList>
            <ListOne
             title={title}

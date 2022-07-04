@@ -1,14 +1,12 @@
 import React, { useState,  useEffect } from "react";
-import {Calendar} from 'react-native-calendars';
+import { format, parseISO } from "date-fns";
 import WixCalendar from "../../../components/WixCalendar";
-import DateRangePicker from "rnv-date-range-picker"
-import moment from "moment";
 import { api } from "../../../services/api";
-import { Feather, AntDesign } from '@expo/vector-icons'
-import { Container, Box, InternBox, LineArea, 
+import { AntDesign } from '@expo/vector-icons'
+import { Container, 
     ItemArea, AreaButton, ItemBorder, ItemDescription,
      ItemLineArea, BorderTitle, AreaTitle, PlusButton, SmallText,
-    ModalCategory, ModalView, Modalheader, List, StepArea, Item, OptionRow} from "./styles";
+    ModalCategory, ModalView, Modalheader, OptionRow} from "./styles";
 
 import CircleTwoButtons from "../../../components/CircleTwoButtons";
 import SmallCustomButton from "../../../components/SmallCustomButton";
@@ -28,30 +26,37 @@ export default ({navigation, route}) => {
     const [motivation, setMotivation] = useState('');
     const categoryId = route.params.categoryId;
     const [category, setCategory] = useState();
-    const [selected, setSelected] = useState({[route.params.days] : {selected:true, marked:true}});
     const [startDate, setStartDate] = useState();
-    const [frequency, setFrequency] = useState([]);
-    
-    
+    const [dateString, setDateString] = useState(); 
+    const [frequency, setFrequency] = useState({
+        days:[]
+    });
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [loadingB, setLoadingB] = useState(false);
-    const [selectedRange, setRange] = useState({});
-    const [value, setValue] = useState(new Date());
+    const [data, setData] = useState([]);
+    let days = route.params.days;
+    let mark = {};
  
+        days.forEach(day => {
+            mark[day] = {selected:true, marked: true};
+        })
     
 
     useEffect(()=>{
         setLoadingB(true);
-        
+        navigation.addListener('focus', async () => {
+            loadHabit();
+            findCategory();
+        })
         async function loadHabit(){
             const response = await api.get('habit/detail', {params:{
                 habitId: id
             }})
             setTitle(response.data[0].title);
             setMotivation(response.data[0].motivation);
-            setFrequency(response.data[0].frequency[0].days);
             setStartDate(response.data[0].created_at);
+            //setDateString(format(parseISO(startDate), "yyyy-MM-dd"));
         }
         
         async function findCategory(){
@@ -59,54 +64,62 @@ export default ({navigation, route}) => {
                 params:{
                 categoryId: categoryId
             }})
-           setCategory(response.data[0].title);
+            setCategory(response.data[0].title);
             setLoadingB(false);
         }
-        loadHabit();
-        findCategory();
-    },[id],[categoryId])
+            loadHabit();
+            findCategory();
+        },[id],[categoryId])
 
+    function receiveData(selected){
+        setData([...days]);
+       selected.forEach(day =>{
+        data.push(day)
+       })
+        setFrequency([{days:data}]);
+    }
+    
     function handleNavigation(){
-        navigation.navigate('UpdateGoal')
+        navigation.navigate('UpdateHabit',{id, motivation, categoryId, title})
    }
 
-   async function handleRemoveGoal(){
+   async function handleUpdateFrequency(){
+    setLoadingB(true)
+    const response = await api.put('/habit/frequency',{
+        habitId: id,
+        frequency:frequency
+    })
+    setLoadingB(false);
+
+   }
+
+   async function handleRemoveHabit(){
         
-        const response = await api.delete('/goal/remove', {
+        const response = await api.delete('/habit/remove', {
             params:{
-                goalId: id
+                habitId: id
             }
         })
 
         setLoading(false);
-        navigation.navigate('ListGoals')
+        navigation.navigate('ListHabits')
    }
 
-
-
     function checkSelected(){
-
-       console.log(selectedRange);
-           Alert.alert("Meta Cumprida",
-"",
+           Alert.alert("Dias Cumpridos",
+            "Deseja atualizar os dias em que cumpriu seu hábito?",
            [
             {text: "Não", style:"cancel"},
               { text: "Sim", 
-                onPress:()=>handleRemoveGoal()
+                onPress:()=>handleUpdateFrequency()
             }
            ])
         
     }
 
-
     return(
         <Container>
-          <CircleTwoButtons
-                buttonName1={'Adicionar Alarme'} 
-                buttonName2={'Ativar Notificações'}  
-                IconSvg1={IconClock} 
-                IconSvg2={IconEnvelop}
-            />
+         
         <AreaTitle>
         <BorderTitle>
             {title}
@@ -151,7 +164,7 @@ export default ({navigation, route}) => {
            {loading?(<ActivityIndicator size={55} color="#FFF"/>):
            (<SmallCustomButton
            buttonName={'REMOVER'}
-           onPress={handleRemoveGoal}
+           onPress={handleRemoveHabit}
            />)}
             </AreaButton>
 
@@ -164,7 +177,7 @@ export default ({navigation, route}) => {
                 >
             <Modalheader>
                 <OptionRow>
-                <AntDesign.Button backgroundColor="#ffffff" name="close" size={20} color="#ff985f" onPress={() => {setOpen(false); setRange([{}])}} />
+                <AntDesign.Button backgroundColor="#ffffff" name="close" size={20} color="#ff985f" onPress={() => setOpen(false)} />
                 <AntDesign.Button backgroundColor="#ffffff" name="check" size={26} color="#CAE0CC" onPress={() => {setOpen(false); checkSelected()}} />
                 </OptionRow>
                 <BorderTitle>
@@ -173,7 +186,11 @@ export default ({navigation, route}) => {
              </Modalheader>
                 <ModalView>
                     
-                    <WixCalendar/>
+                    <WixCalendar
+                    initialState={mark}
+                    receiveData={receiveData}
+                    minDate={startDate}
+                    />
                 </ModalView>
         </ModalCategory>
                 

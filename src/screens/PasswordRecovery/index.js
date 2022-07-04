@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-community/async-storage';
+import { api } from "../../services/api";
 
 
 import SignInput from '../../components/SignInput';
@@ -11,12 +11,23 @@ import {AntDesign} from '@expo/vector-icons';
 
 import { Container, InputArea, 
         CustomButton, CustomButtonText, InfoText, Back} from './styles'; 
+import { ActivityIndicator } from "react-native";
 
 
 export default () => {
-    const [emailField, setEmailField] = useState('');
+    const [email, setEmail] = useState('');
+    const [loading, setLoading] = useState(false);
     const navigation = useNavigation();
 
+    async function handleRequest(){
+        setLoading(true)
+        const response = await api.post('/recovery',{
+            email: email
+        })
+        setLoading(false);
+        navigation.navigate('SignIn');
+    }
+       
     return (
         <Container>
             <Back
@@ -28,11 +39,12 @@ export default () => {
             <Title Title="Recuperação de senha"></Title>
 
             <InputArea>
-            <InfoText>Um link para criação de uma nova senha será enviado para seu e-mail, caso ele seja válido.</InfoText>
-                <SignInput
-                    placeholder="Digite seu e-mail"
-                    value={emailField}
-                    onChangetext={text=>setEmailField(text)}
+            <InfoText>Você receberá um e-mail para recuperação da senha, caso ele seja válido.</InfoText>
+            <SignInput
+                    placeholder="E-mail"
+                    value={email}
+                    onChangeText={setEmail}
+                    password={false}
                 />
 
                 <LinearGradient
@@ -41,9 +53,13 @@ export default () => {
                     colors={['#ff985f', 'rgba(255, 152, 95, 0.35)']}
                     style={{borderRadius: 30, marginTop:70}}
                 >
-                <CustomButton>
-                    <CustomButtonText>RESETAR SENHA</CustomButtonText>
-                </CustomButton>
+                {loading?(<ActivityIndicator size={65} color="#FFF"/>):(
+                    <CustomButton
+                    onPress={()=> handleRequest()}
+                    >
+                        <CustomButtonText>RESETAR SENHA</CustomButtonText>
+                    </CustomButton>
+                )}
                 </LinearGradient>
 
             </InputArea>

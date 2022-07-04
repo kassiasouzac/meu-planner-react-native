@@ -25,7 +25,8 @@ flex-direction:row;
 justify-content: center;
 borderBottomWidth: 2px;
 border-color: 'rgba(255, 152, 95, 0.35)';
-
+margin-left: 20px;
+margin-bottom: 10px;
 `;
 
 export default ({IconSvg, value}) => {

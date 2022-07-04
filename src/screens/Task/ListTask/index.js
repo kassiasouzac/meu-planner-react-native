@@ -15,39 +15,53 @@ import IconCategory from '../../../assets/icons/category.svg'
 
 
 export default ({navigation, route}) => {
+    const id = route.params.id;
     const title = route.params.title;
     const description = route.params.description;
-    const date = (route.params.dateString)
+    const dateString = route.params.dateString;
+    const date = route.params.date;
     const [category, setCategory] = useState();
     const [loading, setLoading] = useState(false);
+    const [loadingB, setLoadingB] = useState(false);
     const categoryId = route.params.categoryId;
 
     useEffect(()=>{
-        setLoading(true);
+        setLoadingB(true);
         async function findCategory(){
             const response = await api.get('category/detail', {params:{
                 categoryId: categoryId
             }})
            setCategory(response.data[0].title);
-            setLoading(false);
+            setLoadingB(false);
         }
         findCategory();
     },[categoryId])
     
+    function handleNavigation(){
+        navigation.navigate('UpdateTask', {id,title, description, categoryId, date, dateString})
+    }
+
+    async function handleRemoveTask(){
+        setLoading(true);
+
+        const response = await api.delete('/task/remove',{
+            params:{
+                taskId: id
+            }
+        })
+        setLoading(false);
+        navigation.navigate('ListTasks')
+    }
+
     return(
         <Container>
-           <CircleTwoButtons
-                buttonName1={'Adicionar Alarme'} 
-                buttonName2={'Ativar Notificações'}  
-                IconSvg1={IconClock} 
-                IconSvg2={IconEnvelop}
-            />
+           
           <Area>
             <BorderTitle>
                 {title}
               </BorderTitle>
                <ItemArea >
-               {loading? (<ActivityIndicator size={65} color="#FFF"/>):(<ItemBorder>
+               {loadingB? (<ActivityIndicator size={65} color="#FFF"/>):(<ItemBorder>
                     <ItemLineArea>
                         <Icontitle width="22" height="22" fill="#FF985F"/>
                         <ItemDescription>{title}</ItemDescription>
@@ -60,7 +74,7 @@ export default ({navigation, route}) => {
 
                     <ItemLineArea>
                         <IconCalendar width="22" height="22" fill="#FF985F"/>
-                    <ItemDescription>{date}</ItemDescription>
+                    <ItemDescription>{dateString}</ItemDescription>
                     </ItemLineArea>
                     <ItemLineArea>
                         <IconCategory width="22" height="22" fill="#FF985F"/>
@@ -71,10 +85,18 @@ export default ({navigation, route}) => {
             </ItemArea> 
            </Area>
            <AreaButton>
+
             <SmallCustomButton
                 buttonName={"EDITAR"}
+                onPress={handleNavigation}
 
             />
+            {loading?(<ActivityIndicator size={65} color="#FFF"/>):(<SmallCustomButton
+                buttonName={"REMOVER"}
+                onPress={handleRemoveTask}
+
+            />)}
+            
             </AreaButton>
            
 

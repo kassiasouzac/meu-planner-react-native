@@ -19,8 +19,8 @@ export default ({buttonName, onPress}) => {
         <LinearGradient
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
-        colors={['#ff985f', 'rgba(255, 152, 95, 0.81)']}
-        style={{borderRadius: 30, marginTop:70}}
+        colors={['#ff985f', 'rgba(255, 152, 95, 0.62)']}
+        style={{borderRadius: 30, marginTop:20}}
     >
     <CustomButton onPress={onPress}>
         <CustomButtonText>{buttonName}</CustomButtonText>

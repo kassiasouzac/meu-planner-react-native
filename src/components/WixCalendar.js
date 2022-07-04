@@ -1,55 +1,80 @@
-import React from 'react'
+import React, {useState} from 'react'
 import moment from 'moment' 
 import { View } from 'react-native' 
-import { Calendar } from 'react-native-calendars' 
+import { Calendar, LocaleConfig } from 'react-native-calendars' 
 
 
 const _format = 'YYYY-MM-DD'
 const _today = moment().format(_format)
-const _maxDate = moment().add(15, 'days').format(_format)
 
-class WixCalendar extends React.Component {
-  // It is not possible to select some to current day.
-  initialState = {
-      [_today]: {disabled: true}
-  }
-  
-  constructor() {
-    super();
+LocaleConfig.locales['br'] = {
+  monthNames: [
+    'Janeiro',
+    'Fevereiro',
+    'Março',
+    'Abril',
+    'Maio',
+    'Junho',
+    'Julho',
+    'Agosto',
+    'Setembro',
+    'Outubro',
+    'Novembro',
+    'Dezembro'
+  ],
+  monthNamesShort: ['Jan.', 'Fev.', 'Mar', 'Abril', 'Mai', 'Jun', 'Jul.', 'Ago', 'Set.', 'Out.', 'Nov.', 'Dez.'],
+  dayNames: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'],
+  dayNamesShort: ['Dom.', 'Seg.', 'Ter.', 'Qua.', 'Qui.', 'Sex.', 'Sab.'],
+  today: "Hoje"
+};
+LocaleConfig.defaultLocale = 'br';
 
-    this.state = {
-      _markedDates: this.initialState
-    }
-  }
+export default ({initialState, receiveData, minDate}) => {
+ 
+  //console.log(minDate)
+  const [ _markedDates, setMarkedDates] = useState(initialState);
+  const [days, setDays] = useState([]);
   
   onDaySelect = (day) => {
       const _selectedDay = moment(day.dateString).format(_format);
       
       let selected = true;
-      if (this.state._markedDates[_selectedDay]) {
-        // Already in marked dates, so reverse current marked state
-        selected = !this.state._markedDates[_selectedDay].selected;
+      if (_markedDates[_selectedDay]) {
+     
+        selected = false;
       }
-      
-      // Create a new object using object property spread since it should be immutable
-      // Reading: https://davidwalsh.name/merge-objects
-      const updatedMarkedDates = {...this.state._markedDates, ...{ [_selectedDay]: { selected } } }
-      
-      // Triggers component to render again, picking up the new state
-      this.setState({ _markedDates: updatedMarkedDates });
-      console.log(this.state._markedDates);
+     
+      let index = days.findIndex(i=> i === day.dateString);
+      let updateDays = [...days]
+      if(index === -1){
+            updateDays.push(day.dateString);
+        }else{
+          updateDays.splice(index, 1);
+            
+        }
+        setDays(updateDays)
+    
+      const updatedMarkedDates = {..._markedDates, ...{ [_selectedDay]: { selected } } }
+  
+      setMarkedDates(updatedMarkedDates);
+      receiveData(updateDays);
+
   }
   
-  render() {
     return (
       <View>
         <Calendar
-            onDayPress={this.onDaySelect}
-            markedDates={this.state._markedDates}
+            onDayPress={onDaySelect}
+            markedDates={_markedDates}
+            minDate={minDate}
+            maxDate={_today}
+            theme={{
+              selectedDayBackgroundColor: '#FF985F',
+            }}
         />
       </View>
     );
   }
-}
 
-export default WixCalendar
+
+

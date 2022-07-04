@@ -39,13 +39,18 @@ export default ({navigation, route}) => {
 
     useEffect(()=>{
         setLoading(true);
+        navigation.addListener('focus', async () => {
+            loadSteps();
+        })
         async function loadSteps(){
+            
             const response = await api.get('/steps',{
                 params:{
                     goalId: id
                 }
             })
-            setSteps(response.data);
+            setSteps(response.data.step);
+            console.log(response.data.step);
         }
         async function findCategory(){
             const response = await api.get('category/detail', {params:{
@@ -126,12 +131,7 @@ export default ({navigation, route}) => {
 
     return(
         <Container>
-          <CircleTwoButtons
-                buttonName1={'Adicionar Alarme'} 
-                buttonName2={'Ativar Notificações'}  
-                IconSvg1={IconClock} 
-                IconSvg2={IconEnvelop}
-            />
+    
         <AreaTitle>
         <BorderTitle>
             {title}

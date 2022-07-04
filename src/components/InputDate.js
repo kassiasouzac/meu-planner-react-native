@@ -7,8 +7,8 @@ const InputArea = styled.View`
     height: 50px;
     flex-direction: row;
     padding-left: 15px;
-    align-items: center;
-    justify-content: space-between;
+    align-items: flex-start;
+    justify-content: flex-start;
     margin-bottom: 2px;
 `;
 
@@ -24,8 +24,8 @@ flex-direction:row;
 justify-content: center;
 borderBottomWidth: 2px;
 border-color: 'rgba(255, 152, 95, 0.35)';
-padding-bottom: 0px;
-margin: 0px;
+margin-left: 20px;
+
 `;
 
 export default ({IconSvg, value}) => {

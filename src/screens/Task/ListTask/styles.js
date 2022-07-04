@@ -15,8 +15,7 @@ padding-left: 2px;
 align-items: center;
 justify-content: space-between;
 margin-bottom: 5px;
-padding-bottom: 0px;
-padding-top: 30px;
+
 `;
 
 export const ItemTitle = styled.Text`
@@ -39,14 +38,17 @@ margin-bottom:10px;
 
 
 export const BorderTitle = styled.Text`
-    font-size: 21px;
-    color: 'rgba(166,156,156,0.9)';
-    font-family: Roboto-Regular;
-    margin-bottom: -25px;
+font-size: 21px;
+color: #FF985F;
+font-family: Pacifico-Regular;
+margin-bottom: 5px;
+margin-top:5px;
+align-self:center;
 `;
 
 export const AreaButton = styled.View`
-width: 60%;
+width:100%;
+flex-direction: row;
 justify-content: center;
 align-items: center;
 padding:0px;
@@ -55,8 +57,8 @@ margin-top:0px;
 
 export const Area = styled.View`
 align-items: center;
-margin-top:45px;
-margin-bottom:100px;
+margin-top:25px;
+margin-bottom:50px;
 `;
 
 export const ItemDescription = styled.Text`

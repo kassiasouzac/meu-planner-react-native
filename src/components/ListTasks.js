@@ -204,12 +204,12 @@ export default ({options}) => {
     function handleNavigation(item){
         const title = item.title;
         const description = item.description;
-        const date = (parseISO(item.date));
-        const dateString = format(date,"dd/MM/yyyy");
+        const date = item.date;
+        const dateString = format(parseISO(date),"dd/MM/yyyy");
         const id = item.id;
         const categoryId = item.categoryId;
    
-        navigation.navigate('ListTask', {title, description, dateString, id, categoryId})
+        navigation.navigate('ListTask', {title, description, dateString, id, categoryId,date})
 
     }
 

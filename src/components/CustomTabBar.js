@@ -4,9 +4,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import Home from "../assets/icons/home.svg";
 import Todo from "../assets/icons/todo.svg";
-import Calendar from "../assets/icons/calendar.svg";
 import Profile from "../assets/icons/user.svg";
-//import Plus from "../assets/icons/plus.svg";
+import Contacts from "../assets/icons/contacts.svg";
 import Plus from "../assets/icons/plus.svg";
 
 const TabArea = styled.View`
@@ -55,8 +54,8 @@ export default({state, navigation})=>{
                 </TabItemCenter>
             </LinearGradient>
             
-            <TabItem onPress={()=>goTo('Calendar')}>
-                <Calendar width="24" height="24" fill="#FF985F" style={{opacity: state.index===3 ? 1 : 0.9}}/>
+            <TabItem onPress={()=>goTo('Contact')}>
+                <Contacts width="24" height="24" fill="#FF985F" style={{opacity: state.index===3 ? 1 : 0.9}}/>
             </TabItem>
             <TabItem onPress={()=>goTo('Profile')}>
                 <Profile width="24" height="24" fill="#FF985F" style={{opacity: state.index===4 ? 1 : 0.9}}/>

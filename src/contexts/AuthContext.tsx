@@ -16,7 +16,8 @@ type AuthContextData = {
     id: string;
     name: string;
     email: string;
-    token: string
+    lastname: string;
+    token: string;
   }
   
   type AuthProviderProps = {
@@ -35,6 +36,7 @@ export function AuthProvider ({children}: AuthProviderProps){
         id: '',
         name: '',
         email: '',
+        lastname: '',
         token:''
     })
 
@@ -56,7 +58,8 @@ export function AuthProvider ({children}: AuthProviderProps){
             id: hasUser.id,
             name: hasUser.name,
             email: hasUser.email,
-            token: hasUser.token
+            token: hasUser.token,
+            lastname: hasUser.lastname
           })
         }
         setLoading(false);
@@ -74,7 +77,7 @@ export function AuthProvider ({children}: AuthProviderProps){
                 email, 
                 password});
 
-            const { id, name, token } = response.data
+            const { id, name, token, lastname } = response.data
 
             const data = {
               ...response.data
@@ -88,6 +91,7 @@ export function AuthProvider ({children}: AuthProviderProps){
               id,
               name,
               email,
+              lastname,
               token
             })
 
@@ -105,6 +109,7 @@ export function AuthProvider ({children}: AuthProviderProps){
           id: '',
           name: '',
           email: '',
+          lastname:'',
           token: ''
         })
       })

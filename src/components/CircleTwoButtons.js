@@ -25,11 +25,13 @@ const CustomButtonText = styled.Text`
 `;
 
 
-export default ({buttonName1, buttonName2, IconSvg1, IconSvg2}) => {
+export default ({buttonName1, buttonName2, IconSvg1, IconSvg2, onPress1, onPress2}) => {
     return (
         <ButtonArea>
             
-            <CustomButton>
+            <CustomButton
+            onPress={onPress1}
+            >
             
             <IconSvg1 width="25" height="25" fill="#FF985F" />
             <CustomButtonText>{buttonName1}</CustomButtonText>
@@ -37,9 +39,11 @@ export default ({buttonName1, buttonName2, IconSvg1, IconSvg2}) => {
             
     
             
-            <CustomButton>
+            <CustomButton
+             onPress={onPress2}
+            >
             
-            <IconSvg2 width="25" height="25" fill="#FF985F" />
+            <IconSvg2 width="25" height="25" fill="rgba(236, 7, 7, 0.84)" />
             <CustomButtonText>{buttonName2}</CustomButtonText>
             </CustomButton>
             

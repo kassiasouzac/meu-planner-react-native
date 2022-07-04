@@ -20,7 +20,11 @@ export default () => {
 
     useEffect(()=>{
        async function loadInfo(){
-            const response = await api.get('/tasks')
+        const get = await api.get('/planning');
+        const planningId = get.data.planning.id;
+            const response = await api.get('/tasks', {params:{
+                planningId: planningId
+            }})
             setTasks(response.data.task);
         }
         loadInfo();

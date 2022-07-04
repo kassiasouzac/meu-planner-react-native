@@ -205,8 +205,9 @@ export default ({options}) => {
         const id = item.id; 
         const categoryId = item.categoryId; 
         const days = item.frequency[0].days
-   
-        navigation.navigate('ListHabit', {id, categoryId,days})
+        const startDate = item.created_at;
+       
+        navigation.navigate('ListHabit', {id, categoryId,days, startDate})
     }
 
     function renderOption(item){
